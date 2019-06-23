@@ -1,0 +1,42 @@
+class PermutationSequence {
+    
+    Map<Integer, List<String>> map = new HashMap<>();
+    
+    public String getPermutation(int n, int k) {
+        if (map.isEmpty()) {
+            init();
+        }
+        return map.get(n).get(k-1);
+    }
+    
+    private void init() {
+        for (int i = 1;i <=9;i++) {
+            List<String> perm = new ArrayList<>();
+            map.put(i, perm);
+            char [] c = new char[i];
+            for (int j=0;j<i;j++) {
+                c[j] =(char)('1' + j);
+            }
+            permutation(perm, c, 0, i);
+        }
+    }
+    
+    private void permutation(List<String> perm, char[] c, int s, int e){
+        if(s==e) {
+          perm.add(String.copyValueOf(c));     
+          return;
+        }
+        for (int i=s;i<e;i++){
+            swap(c, s, i);
+            permutation(perm, c, s+1, e);
+            swap(c, i, s);
+        }
+        
+    }
+    
+    private void swap(char []c, int s, int e) {
+        char t = c[s];
+        c[s] = c[e];
+        c[e] = t;
+    }
+}
