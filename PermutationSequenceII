@@ -1,0 +1,33 @@
+class Solution {
+
+    int[] factorial = new int[9];
+    List<Character> nums = new ArrayList();
+    String s= "123456789";
+    public String getPermutation(int n, int k) {
+      initFactorial();
+      initNums();
+      k--;
+      char[] results = new char[n];  
+      for (int i = 0;i < n; i++) {
+          int currentFactorialIdx = n - i - 1;
+          int charIdx = k / factorial[currentFactorialIdx];
+          results[n-i-1] = nums.get(charIdx);
+          nums.remove(charIdx);
+          k = k %  factorial[currentFactorialIdx];
+      }  
+      return String.copyValueOf(results);
+    }
+    
+    private void initFactorial() {
+        factorial[0] = 1;
+        for (int i = 1;i<9;i ++) {
+            factorial[i] = i * factorial[i - 1];
+        }
+    }
+    
+    private void initNums() {
+        for (int i = 0;i<9; i++) {
+            nums.add(s.charAt(i));
+        }
+    }
+}
